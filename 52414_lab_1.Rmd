@@ -93,12 +93,15 @@ recovered.agg <- recovered.agg[order(recovered.agg$Country.Region),]
 #c
 cases.agg1 <- select(conf_cases, Country.Region, Date, Value)
 cases.agg1 <- group_by(cases.agg1, Country.Region, Date) %>% summarize(Value = sum(Value))
+all(cases.agg==cases.agg1)
 
 deaths.agg1 <- select(conf_deaths, Country.Region, Date, Value)
 deaths.agg1 <- group_by(deaths.agg1, Country.Region, Date) %>% summarize(Value = sum(Value))
+all(deaths.agg==deaths.agg1)
 
 recov.agg1 <- select(conf_recov, Country.Region, Date, Value)
 recov.agg1 <- group_by(recov.agg1, Country.Region, Date) %>% summarize(Value = sum(Value))
+all(recovered.agg==recov.agg1)
 
 #d
 march_c <- cases.agg[which(cases.agg$Date=="2020-03-31"),]
@@ -109,15 +112,21 @@ top_march_c <- march_c[order(-march_c$Value),][1:10,]
 top_march_d <- march_d[which(march_d$Country.Region %in% top_march_c$Country.Region),]
 top_march_r <- march_r[which(march_r$Country.Region %in% top_march_c$Country.Region),]
 
+top_march_c <- top_march_c[order(top_march_c$Country.Region),] 
+top_march_d <- top_march_d[order(top_march_d$Country.Region),] 
+top_march_r <- top_march_r[order(top_march_r$Country.Region),]
 
-
-
-
-
-
-
-
-
+country <- top_march_c$Country.Region
+cases <- top_march_c$Value
+deaths <- top_march_d$Value
+recovered <- top_march_r$Value
+sick <- cases - deaths - recovered
+march_data <- data.frame(sick, deaths, recovered)
+march_t <- transpose(march_data)
+rownames(march_t) <- colnames(march_data)
+colnames(march_t) <- top_march_c$Country.Region
+barplot(as.matrix(march_t), main= "Top corona March", cex.names = 1, col = c("bisque1","firebrick1","darkorchid1"), xlab="Countries", ylab = "Corona Cases", las=2)
+legend("topleft", c("Sick","Deaths", "Recovered"), fill = c("bisque1","firebrick1","darkorchid1"))
 
 ```
 
@@ -138,8 +147,70 @@ d. Plot the same graph as in (c), but this time plot the number of new cases on 
   
 **Solution:**    
 
-YOUR SOLUTION HERE.
-Use code blocks and markdown to clearly communicate your work.
+```{r}
+#a
+dates <- unique(cases.agg$Date)
+
+first_day_cases <- cases.agg[which(cases.agg$Date=="2020-01-22"),]
+diff_cases <- first_day_cases$Value
+
+for (day in dates){
+  new_day <- cases.agg[which(cases.agg$Date==day + 1),]
+  new_val <- new_day$Value
+  old_day <- cases.agg[which(cases.agg$Date==day),]
+  old_val <- old_day$Value
+  val <- new_val - old_val
+  diff_cases <- c(diff_cases, val)
+}
+cases.agg <- cases.agg[order(cases.agg$Date),]
+cases.agg$Diff <- diff_cases
+cases.agg <- cases.agg[order(cases.agg$Country.Region),]
+
+first_day_deaths <- deaths.agg[which(deaths.agg$Date=="2020-01-22"),]
+diff_deaths <- first_day_deaths$Value
+
+for (day in dates){
+  new_day <- deaths.agg[which(deaths.agg$Date==day + 1),]
+  new_val <- new_day$Value
+  old_day <- deaths.agg[which(deaths.agg$Date==day),]
+  old_val <- old_day$Value
+  val <- new_val - old_val
+  diff_deaths <- c(diff_deaths, val)
+}
+deaths.agg <- deaths.agg[order(deaths.agg$Date),]
+deaths.agg$Diff <- diff_deaths
+deaths.agg <- deaths.agg[order(deaths.agg$Country.Region),]
+
+#b
+new_cases <- cases.agg[order(-cases.agg$Diff),][1:10,]
+new_deaths <- deaths.agg[order(-deaths.agg$Diff),][1:10,]
+
+top_cases <- select(new_cases, Country.Region, Date, Diff)
+print(summary(top_cases))
+
+top_deaths <- select(new_deaths, Country.Region, Date, Diff)
+print(summary(top_deaths))
+
+#c
+italy_cases <- cases.agg[which(cases.agg$Country.Region== "Italy"),c(2,4)]
+italy_deaths <- deaths.agg[which(deaths.agg$Country.Region== "Italy"),c(2,4)]
+plot(italy_cases$Date, italy_cases$Diff, xlab = "Date", ylab = "Value", main= "Italy Corona", sub = "Daily deaths and new cases" ,pch = 8, col= "red", las=2)
+points(italy_deaths$Date, italy_deaths$Diff, col= "blue", pch= 16)
+legend("topleft", c("Cases", "Deaths"), col= c("red", "blue"), pch = c(8, 16))
+
+#d
+plot(italy_cases$Date, log(italy_cases$Diff), xlab = "Date", ylab = "Value", main= "Italy Corona", sub = "Daily deaths and new cases" ,pch = 8, col= "red", las=2)
+points(italy_deaths$Date, log(italy_deaths$Diff), col= "blue", pch= 16)
+legend("topleft", c("Cases", "Deaths"), col= c("red", "blue"), pch = c(8, 16))
+
+#We can learn from the graph that the deaths and new cases increase at a similair rate, parallel to eachother.
+
+
+
+
+
+
+```
 
 <br/><br/>
 
