@@ -186,7 +186,9 @@ new_cases <- cases.agg[order(-cases.agg$Diff),][1:10,]
 new_deaths <- deaths.agg[order(-deaths.agg$Diff),][1:10,]
 
 top_cases <- select(new_cases, Country.Region, Date, Diff)
-print(summary(top_cases))
+library(tibble)
+as_tibble(top_cases)
+print(top_cases)
 
 top_deaths <- select(new_deaths, Country.Region, Date, Diff)
 print(summary(top_deaths))
@@ -229,6 +231,21 @@ Next (considering all countries), plot the % of population over 65 vs. log of GD
   
   
 **Solution:** 
+```{r}
+eco_data <- read.csv(url("https://raw.githubusercontent.com/DataScienceHU/DataAnalysisR_2020/master/data/economic_data.csv"), header = T)
+
+colnames(eco_data) <- c( "country","S_country","feature","feature_code","Y2018V","Y2019V")
+country<- unique(eco_data$country)
+library(tidyr)
+feature_1 <- unique(eco_data$feature)
+eco <- data.frame(country, )
+
+eco %>% select(1:6)
+colnames(eco) <- c("country", "GDP","pop65","pop_city_ratio", "pop_total_columns")
+                  
+
+
+```
   
 YOUR SOLUTION HERE.
 Use code blocks and markdown to clearly communicate your work.
@@ -247,10 +264,19 @@ c. Create new columns of normalized `cases`, `deaths`, and `recovered` so they w
 Using the last day of March as a reference, create a single stacked bar plot that visualizes the top 10 countries in terms of normalized Corona cases, and their respected normalized Corona deaths and recovered, as done in Q1.   
 how is it different from the graph before normalization? (5pts)
 d. Using the last day of March as a reference, create a scatter-plot of normalized deaths and cases vs. `pop65`. Limit the plot to show only countries with 15% or more of `pop65`.   
-In addition, color the outliers( pop65>24, norm100K_deaths>15) in that plot in red and add to the plot their country names (7pts)
+In addition, colorcorona <- the outliers( pop65>24, norm100K_deaths>15) in that plot in red and add to the plot their country names (7pts)
   
-  
-**Solution:**   
+**Solution:**
+```{r}
+corona <- full_join(deaths.agg, recovered.agg)
+corona<- full_join(corona, cases.agg)
+corona_and_eco <- semi_join(eco, corona)###
+
+
+
+
+
+```
 
 YOUR SOLUTION HERE.
 Use code blocks and markdown to clearly communicate your work.
