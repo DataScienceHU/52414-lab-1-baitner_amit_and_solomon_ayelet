@@ -16,7 +16,7 @@ output: html_document
 * Q2) [Analysis of Daily New Corona Cases and Deaths](#analysis-of-daily-new-corona-cases-and-deaths)    
 * Q3) [Preparing and Analyzing the World Bank Data](#preparing-and-analyzing-the-world-bank-data)
 * Q4) [Joining the Datasets](#joining-the-datasets)  
-* Q5) [Open Question](#open-question)
+* Q5)   [Open Question](#open-question)
 
 <br/><br/>
   
