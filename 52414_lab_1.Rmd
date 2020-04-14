@@ -1,6 +1,6 @@
 ---@
 title: "52414 - lab 1"
-author: "52414"
+author: "Ayelet Solomon, Amit Baitner
 date: "4/4/2020"
 output: html_document
 ---
@@ -68,8 +68,6 @@ d. Using the last day of March as a reference, create a single stacked bar-plot 
 
 ```{r}
 library("dplyr")
-library("data.table")
-library("dslabs")
 
 #a
 conf_cases <- read.csv(url("https://data.humdata.org/hxlproxy/data/download/time_series_covid19_confirmed_global_narrow.csv?dest=data_edit&filter01=merge&merge-url01=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vTglKQRXpkKSErDiWG6ycqEth32MY0reMuVGhaslImLjfuLU0EUgyyu2e-3vKDArjqGX7dXEBV8FJ4f%2Fpub%3Fgid%3D1326629740%26single%3Dtrue%26output%3Dcsv&merge-keys01=%23country%2Bname&merge-tags01=%23country%2Bcode%2C%23region%2Bmain%2Bcode%2C%23region%2Bsub%2Bcode%2C%23region%2Bintermediate%2Bcode&filter02=merge&merge-url02=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vTglKQRXpkKSErDiWG6ycqEth32MY0reMuVGhaslImLjfuLU0EUgyyu2e-3vKDArjqGX7dXEBV8FJ4f%2Fpub%3Fgid%3D398158223%26single%3Dtrue%26output%3Dcsv&merge-keys02=%23adm1%2Bname&merge-tags02=%23country%2Bcode%2C%23region%2Bmain%2Bcode%2C%23region%2Bsub%2Bcode%2C%23region%2Bintermediate%2Bcode&merge-replace02=on&merge-overwrite02=on&filter03=explode&explode-header-att03=date&explode-value-att03=value&filter04=rename&rename-oldtag04=%23affected%2Bdate&rename-newtag04=%23date&rename-header04=Date&filter05=rename&rename-oldtag05=%23affected%2Bvalue&rename-newtag05=%23affected%2Binfected%2Bvalue%2Bnum&rename-header05=Value&filter06=clean&clean-date-tags06=%23date&filter07=sort&sort-tags07=%23date&sort-reverse07=on&filter08=sort&sort-tags08=%23country%2Bname%2C%23adm1%2Bname&tagger-match-all=on&tagger-default-tag=%23affected%2Blabel&tagger-01-header=province%2Fstate&tagger-01-tag=%23adm1%2Bname&tagger-02-header=country%2Fregion&tagger-02-tag=%23country%2Bname&tagger-03-header=lat&tagger-03-tag=%23geo%2Blat&tagger-04-header=long&tagger-04-tag=%23geo%2Blon&header-row=1&url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_confirmed_global.csv"),header=T,comment.char = "#")
@@ -78,6 +76,8 @@ conf_deaths <- read.csv(url("https://data.humdata.org/hxlproxy/data/download/tim
 
 conf_recov <- read.csv(url("https://data.humdata.org/hxlproxy/data/download/time_series_covid19_recovered_global_narrow.csv?dest=data_edit&filter01=merge&merge-url01=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vTglKQRXpkKSErDiWG6ycqEth32MY0reMuVGhaslImLjfuLU0EUgyyu2e-3vKDArjqGX7dXEBV8FJ4f%2Fpub%3Fgid%3D1326629740%26single%3Dtrue%26output%3Dcsv&merge-keys01=%23country%2Bname&merge-tags01=%23country%2Bcode%2C%23region%2Bmain%2Bcode%2C%23region%2Bsub%2Bcode%2C%23region%2Bintermediate%2Bcode&filter02=merge&merge-url02=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vTglKQRXpkKSErDiWG6ycqEth32MY0reMuVGhaslImLjfuLU0EUgyyu2e-3vKDArjqGX7dXEBV8FJ4f%2Fpub%3Fgid%3D398158223%26single%3Dtrue%26output%3Dcsv&merge-keys02=%23adm1%2Bname&merge-tags02=%23country%2Bcode%2C%23region%2Bmain%2Bcode%2C%23region%2Bsub%2Bcode%2C%23region%2Bintermediate%2Bcode&merge-replace02=on&merge-overwrite02=on&filter03=explode&explode-header-att03=date&explode-value-att03=value&filter04=rename&rename-oldtag04=%23affected%2Bdate&rename-newtag04=%23date&rename-header04=Date&filter05=rename&rename-oldtag05=%23affected%2Bvalue&rename-newtag05=%23affected%2Binfected%2Bvalue%2Bnum&rename-header05=Value&filter06=clean&clean-date-tags06=%23date&filter07=sort&sort-tags07=%23date&sort-reverse07=on&filter08=sort&sort-tags08=%23country%2Bname%2C%23adm1%2Bname&tagger-match-all=on&tagger-default-tag=%23affected%2Blabel&tagger-01-header=province%2Fstate&tagger-01-tag=%23adm1%2Bname&tagger-02-header=country%2Fregion&tagger-02-tag=%23country%2Bname&tagger-03-header=lat&tagger-03-tag=%23geo%2Blat&tagger-04-header=long&tagger-04-tag=%23geo%2Blon&header-row=1&url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_recovered_global.csv"),header=T,comment.char = "#")
 
+#Changing the date column to date type.
+#a
 conf_cases$Date <- as.Date(conf_cases$Date)
 conf_deaths$Date <- as.Date(conf_deaths$Date)
 conf_recov$Date <- as.Date(conf_recov$Date)
@@ -123,12 +123,19 @@ cases <- top_march_c$Value
 deaths <- top_march_d$Value
 recovered <- top_march_r$Value
 sick <- cases - deaths - recovered
-march_data <- data.frame(sick, deaths, recovered)
+total_cases <- cases
+march_data <- data.frame(total_cases, sick, deaths, recovered)
+march_data <- march_data[order(-march_data$total_cases),]
 march_t <- transpose(march_data)
+top_march_c <- march_c[order(-march_c$Value),][1:10,]
 rownames(march_t) <- colnames(march_data)
 colnames(march_t) <- top_march_c$Country.Region
-barplot(as.matrix(march_t), main= "Top corona March", cex.names = 1, col = c("bisque1","firebrick1","darkorchid1"), xlab="Countries", ylab = "Corona Cases", las=2)
-legend("topleft", c("Sick","Deaths", "Recovered"), fill = c("bisque1","firebrick1","darkorchid1"))
+march_t <- march_t[-c(1),]
+
+
+
+barplot(as.matrix(march_t), main= "cases, deaths and recovered corona cases- March 2020", cex.names = 0.45, col = c("bisque1","firebrick1","darkorchid1"), xlab="Countries", ylab = "Corona Cases",  ylim= c(0, 200000))
+legend("topright", c("Sick","Deaths", "Recovered"), fill = c("bisque1","firebrick1","darkorchid1"))
 
 ```
 
@@ -328,10 +335,9 @@ legend("topright", c("Sick","Deaths", "Recovered"), fill = c("bisque1","firebric
 cor_eco_march <- cor_eco[which(cor_eco$Date=="2020-03-31"),]
 flt_march <- cor_eco_march[which(cor_eco_march$pop65 >= 15),]
 
-plot(flt_march$pop65, flt_march$nor_cases, xlab = "% population over age 65", ylab = "Corona cases", main= "Corona cases and deaths vs % population over age 65", pch = 8, col= "black", las=2)
-points(flt_march$pop65, flt_march$nor_deaths, col= "black", pch= 16)
+plot(flt_march$pop65, flt_march$nor_cases, xlab = "% population over age 65", ylab = "Corona cases", main= "Corona cases and deaths vs % population over age 65", pch = c(8), col=ifelse(flt_march$pop65 >24,'red','blue'), las=2)
+points(flt_march$pop65, flt_march$nor_deaths, col= ifelse(flt_march$pop65 >24 & flt_march$nor_deaths>15,'red','blue'), pch= 16)
 legend("topleft", c("Cases", "Deaths"), col= c("black", "black"), pch = c(8, 16))
-
 
 
 
