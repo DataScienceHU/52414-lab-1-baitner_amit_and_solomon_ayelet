@@ -68,6 +68,8 @@ d. Using the last day of March as a reference, create a single stacked bar-plot 
 
 ```{r}
 library("dplyr")
+library("data.table")
+library("dslabs")
 
 #a
 conf_cases <- read.csv(url("https://data.humdata.org/hxlproxy/data/download/time_series_covid19_confirmed_global_narrow.csv?dest=data_edit&filter01=merge&merge-url01=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vTglKQRXpkKSErDiWG6ycqEth32MY0reMuVGhaslImLjfuLU0EUgyyu2e-3vKDArjqGX7dXEBV8FJ4f%2Fpub%3Fgid%3D1326629740%26single%3Dtrue%26output%3Dcsv&merge-keys01=%23country%2Bname&merge-tags01=%23country%2Bcode%2C%23region%2Bmain%2Bcode%2C%23region%2Bsub%2Bcode%2C%23region%2Bintermediate%2Bcode&filter02=merge&merge-url02=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vTglKQRXpkKSErDiWG6ycqEth32MY0reMuVGhaslImLjfuLU0EUgyyu2e-3vKDArjqGX7dXEBV8FJ4f%2Fpub%3Fgid%3D398158223%26single%3Dtrue%26output%3Dcsv&merge-keys02=%23adm1%2Bname&merge-tags02=%23country%2Bcode%2C%23region%2Bmain%2Bcode%2C%23region%2Bsub%2Bcode%2C%23region%2Bintermediate%2Bcode&merge-replace02=on&merge-overwrite02=on&filter03=explode&explode-header-att03=date&explode-value-att03=value&filter04=rename&rename-oldtag04=%23affected%2Bdate&rename-newtag04=%23date&rename-header04=Date&filter05=rename&rename-oldtag05=%23affected%2Bvalue&rename-newtag05=%23affected%2Binfected%2Bvalue%2Bnum&rename-header05=Value&filter06=clean&clean-date-tags06=%23date&filter07=sort&sort-tags07=%23date&sort-reverse07=on&filter08=sort&sort-tags08=%23country%2Bname%2C%23adm1%2Bname&tagger-match-all=on&tagger-default-tag=%23affected%2Blabel&tagger-01-header=province%2Fstate&tagger-01-tag=%23adm1%2Bname&tagger-02-header=country%2Fregion&tagger-02-tag=%23country%2Bname&tagger-03-header=lat&tagger-03-tag=%23geo%2Blat&tagger-04-header=long&tagger-04-tag=%23geo%2Blon&header-row=1&url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_confirmed_global.csv"),header=T,comment.char = "#")
@@ -232,17 +234,36 @@ Next (considering all countries), plot the % of population over 65 vs. log of GD
   
 **Solution:** 
 ```{r}
+
+#a
 eco_data <- read.csv(url("https://raw.githubusercontent.com/DataScienceHU/DataAnalysisR_2020/master/data/economic_data.csv"), header = T)
 
 colnames(eco_data) <- c( "country","S_country","feature","feature_code","Y2018V","Y2019V")
-country<- unique(eco_data$country)
-library(tidyr)
-feature_1 <- unique(eco_data$feature)
-eco <- data.frame(country, )
 
-eco %>% select(1:6)
-colnames(eco) <- c("country", "GDP","pop65","pop_city_ratio", "pop_total_columns")
-                  
+#b
+eco <- eco_data[,c("country", "feature", "Y2018V")]
+eco$Y2018V <- as.numeric(as.character(eco$Y2018V))
+eco <- dcast(eco, country~feature, value.var="Y2018V", fun.aggregate= sum, na.rm= TRUE)
+eco$Var.2 <- NULL
+eco <- eco[-c(1),]
+print(head(eco))
+
+#c
+names(eco)[c(1, 3, 6, 7, 8)] <- c("country", "GDP","pop65","pop_city_ratio", "pop_total_columns") 
+
+#d
+eco_new <- eco
+eco_new$GDP_per_capita <- eco_new$GDP %/% eco_new$pop_total_columns
+eco_new <- eco_new[order(-eco_new$GDP_per_capita),]
+top_eco <- eco_new[1:5,c("country", "GDP_per_capita")]
+top_eco <- as.data.table(top_eco)
+print(top_eco)
+
+eco_new <- eco_new[1:239,c("country", "pop65", "GDP_per_capita")]
+plot(eco_new$pop65, log(eco_new$GDP_per_capita), xlab= "% of population over 65", ylab= "GDP_per_capita", main = "% of population over 65 vs. log of GDP per capita in 2018", pch= 16, col= "darkturquoise")
+abline(lm(log(eco_new$GDP_per_capita) ~ eco_new$pop65), col= "purple", lwd=3)
+#Surprisingly after examining the plot, it seems that in most countries as the percentage of people over 65 increases, so does the GDP per capita (in 2018). 
+
 
 
 ```
@@ -268,10 +289,48 @@ In addition, colorcorona <- the outliers( pop65>24, norm100K_deaths>15) in that 
   
 **Solution:**
 ```{r}
+#a
+names(deaths.agg)[3] <- "Deaths"
+names(recovered.agg)[3] <- "Recovered"
+names(cases.agg)[3] <- "Cases"
+
 corona <- full_join(deaths.agg, recovered.agg)
 corona<- full_join(corona, cases.agg)
-corona_and_eco <- semi_join(eco, corona)###
 
+#b
+names(corona)[1] <- "country"
+cor_eco <- left_join(eco, corona)
+
+#c
+cor_eco$nor_cases <- (cor_eco$Cases) / ((cor_eco$pop_total_columns) / 100000)
+cor_eco$nor_deaths <- (cor_eco$Deaths) / ((cor_eco$pop_total_columns) / 100000)
+cor_eco$nor_recovered <- (cor_eco$Recovered) / (cor_eco$pop_total_columns / 100000)
+
+cor_eco_march <- cor_eco[which(cor_eco$Date=="2020-03-31"),c("country", "Date", "nor_cases", "nor_deaths", "nor_recovered")]
+cor_eco_march <- cor_eco_march[order(-cor_eco_march$nor_cases),][2:11,]
+#Eritrea's population in the data is 0 and so the normalized corona cases came out inf. That is way we excluded them from the top 10 countries.
+
+norm_cases <- cor_eco_march$nor_cases
+norm_deaths <- cor_eco_march$nor_deaths
+norm_recovered <- cor_eco_march$nor_recovered
+norm_sick <- norm_cases - norm_deaths - norm_recovered
+nor_march_data <- data.frame(norm_sick, norm_deaths, norm_recovered)
+nor_march_t <- transpose(nor_march_data)
+rownames(nor_march_t) <- colnames(nor_march_data)
+colnames(nor_march_t) <- cor_eco_march$country
+
+barplot(as.matrix(nor_march_t), main= "Top normalized corona March", cex.names = 1, col = c("bisque1","firebrick1","darkorchid1"), xlab="Countries", ylab = "Corona normalized Cases", las=2)
+legend("topright", c("Sick","Deaths", "Recovered"), fill = c("bisque1","firebrick1","darkorchid1"))
+
+#We notice that the top 10 countries in the orininal graph are mostly countries with large populations. The normalized graph allows us to get a better picture of corona cases in proportion to the countries population. That is why in this graph smaller countries such as Luxenburg (one of the smallest countries in the world) appear as well.
+
+#d
+cor_eco_march <- cor_eco[which(cor_eco$Date=="2020-03-31"),]
+flt_march <- cor_eco_march[which(cor_eco_march$pop65 >= 15),]
+
+plot(flt_march$pop65, flt_march$nor_cases, xlab = "% population over age 65", ylab = "Corona cases", main= "Corona cases and deaths vs % population over age 65", pch = 8, col= "black", las=2)
+points(flt_march$pop65, flt_march$nor_deaths, col= "black", pch= 16)
+legend("topleft", c("Cases", "Deaths"), col= c("black", "black"), pch = c(8, 16))
 
 
 
