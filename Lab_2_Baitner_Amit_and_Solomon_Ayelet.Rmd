@@ -66,8 +66,7 @@ d. Using the last day of March as a reference, create a single stacked bar-plot 
   
 **Solution:**  
 **c- Showing that the two methods are the same by getting true in the checking**
-**Q1.d In our opinion, the problem of presenting the information in such a way is that we lose information about whether there is any trend in the data and it is also difficult to notice the difference between countries in the different cases (death, patients and recoverers). They all displayed in stacked and not 
-separately**
+
 
 ```{r}
 #a
@@ -149,7 +148,8 @@ barplot(as.matrix(march_t), main= "cases, deaths and recovered corona cases- Mar
 legend("topright",title="Legend:", c("Sick","Deaths", "Recovered"), fill = c("bisque1","firebrick1","darkorchid1"))
 
 ```
-
+**Q1.d In our opinion, the problem of presenting the information in such a way is that we lose information about whether there is any trend in the data and it is also difficult to notice the difference between countries in the different cases (death, patients and recoverers). They all displayed in stacked and not 
+separately**
 
 <br/><br/>  
 
@@ -166,7 +166,7 @@ d. Plot the same graph as in (c), but this time plot the number of new cases on 
 
   
 **Solution:**
-**Q2.d. We can learn from the graph that the deaths and new cases increase at a similair rate, parallel to eachother**
+
 
 ```{r}
 #a
@@ -229,7 +229,7 @@ plot(italy_cases$Date, log(italy_cases$Diff),type="o", xlab = "Date", ylab = "Va
 points(italy_deaths$Date, log(italy_deaths$Diff),type="o", col= "blue", pch= 16, ylim= c(0, 12))
 legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), pch = c(8, 16))
 ```
-
+**Q2.d. We can learn from the graph that the deaths and new cases increase at a similair rate, parallel to eachother**
 <br/><br/>
 
 
@@ -305,8 +305,7 @@ d. Using the last day of March as a reference, create a scatter-plot of normaliz
 In addition, colorcorona <- the outliers( pop65>24, norm100K_deaths>15) in that plot in red and add to the plot their country names (7pts)
   
 **Solution:**
-**Q4.c Eritrea's population in the data is 0 and so the normalized corona cases came out inf. That is way we excluded them from the top 10 countries.**
- well**
+
 ```{r}
 #a
 names(deaths.agg)[3] <- "Deaths"
@@ -366,8 +365,10 @@ legend("topleft",title="Legend:", c("Cases", "Deaths", "Deaths >15", "pop65>24")
 
 
 ```
-**We notice that the top 10 countries in the orininal graph are mostly countries with large populations. The normalized graph allows us to get a better picture of corona cases in proportion to the countries population. That is why in this graph smaller countries such as Luxenburg (one of the smallest countries in the world) appear as**
-
+**We notice that the top 10 countries in the orininal graph are mostly countries with large populations. The normalized graph allows us to get a better picture of corona cases in proportion to the countries population. That is why in this graph smaller countries such as Luxenburg (one of the smallest countries in the world) appear as well**
+**We notice that there are countries spelled differently in the two data sets. We when throw the countries we thought were relevant in the assignment (US, Czehia and more).**
+**Q4.c Eritrea's population in the data is 0 and so the normalized corona cases came out inf. That is way we excluded them from the top 10 countries**
+ 
 Use code blocks and markdown to clearly communicate your work.
 
 <br/><br/>  
@@ -378,7 +379,10 @@ Use code blocks and markdown to clearly communicate your work.
 ### Open Question
 10 points
   
-Write an interesting research question regarding the Corona outbreak and then follow the steps to answer it using tables and plots. You can use the loaded datasets or any other dataset you find as long as you add the data file to your `lab1` repository so it can be loaded directly from a `url` (e.g. the World Bank). This question will be graded based on creativity, originality, and the novelty of the analysis.   
+Write an interesting research question regarding the Corona outbreak and then follow the steps to answer it using tables and plots. You can use the loaded datasets or any other dataset you find as long as you add the data file to your `lab1` repository so it can be loaded directly from a `url` (e.g. the World Bank). This question will be graded based on creativity, originality, and the novelty of the analysis.
+
+** Oue reasearch question :
+How Education Level in the countries affects State Citizens' Behavior in the Corona Plague and the state's success in dealing with the epidemic in the OECD countries**
   
 **Solution:**   
 
