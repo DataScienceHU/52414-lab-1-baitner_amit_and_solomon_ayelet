@@ -382,7 +382,8 @@ Use code blocks and markdown to clearly communicate your work.
 Write an interesting research question regarding the Corona outbreak and then follow the steps to answer it using tables and plots. You can use the loaded datasets or any other dataset you find as long as you add the data file to your `lab1` repository so it can be loaded directly from a `url` (e.g. the World Bank). This question will be graded based on creativity, originality, and the novelty of the analysis.
 
 ** Oue reasearch question :
-How Education Level in the countries affects State Citizens' Behavior in the Corona Plague and the state's success in dealing with the epidemic in the OECD countries**
+How many deaths there is in general year between months january to april and how many in 2020 with the Corona?
+Does the deaths rate is different?
   
 **Solution:**   
 
