@@ -239,7 +239,7 @@ as_tibble(top_deaths)
 #Creating the data for the plot of italy by date and cases and deaths
 italy_cases <- cases.agg[which(cases.agg$Country.Region== "Italy"),c(2,4)]
 italy_deaths <- deaths.agg[which(deaths.agg$Country.Region== "Italy"),c(2,4)]
-plot(italy_cases$Date, italy_cases$Diff,type="o", xlab = "Date", ylab = "Value", main= "Italy- daily corona deaths and new cases by date ",pch = 8, col= "red", las=1, ylim=c(0, 7000))
+plot(italy_cases$Date, italy_cases$Diff,type="o", xlab = "Date", ylab = "Value - corona cases and deaths", main= "Italy- daily corona deaths and new cases by date ",pch = 8, col= "red", las=1, ylim=c(0, 7000))
 points(italy_deaths$Date, italy_deaths$Diff,type="o", col= "blue", pch= 16)
 legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), pch = c(8, 16))
 ```
