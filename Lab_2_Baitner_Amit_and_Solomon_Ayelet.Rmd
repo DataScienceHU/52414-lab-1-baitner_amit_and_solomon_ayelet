@@ -229,7 +229,7 @@ new_deaths <- deaths.agg[order(-deaths.agg$Diff),][1:10,]
 top_cases <- select(new_cases, Country.Region, Date, Diff)
 top_deaths <- select(new_deaths, Country.Region, Date, Diff)
 ```
- ** The two tables presenting the top ten counties with new corona cases and corona's deaths.**
+**The two tables presenting the top ten counties with new corona cases and corona's deaths.**
 ```{r}
 as_tibble(top_cases) #Presenting the data (cases) as a table (tibble)
 as_tibble(top_deaths)
@@ -254,6 +254,7 @@ plot(italy_cases$Date, log(italy_cases$Diff),type="o", xlab = "Date", ylab = "Va
 points(italy_deaths$Date, log(italy_deaths$Diff),type="o", col= "blue", pch= 16, ylim= c(0, 12))
 legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), pch = c(8, 16))
 ```
+
 **Q2.d.In this gragh you can see daily corona cases and  deaths in italy from february to april. We used logarithem algoritem on the cases and deaths. This gragh shoes We can learn from the graph that the deaths and new cases increase at a similair rate, parallel to eachother**
 
 <br/><br/>
@@ -306,10 +307,6 @@ eco_new <- eco_new[1:239,c("country", "pop65", "GDP_per_capita")]
 plot(eco_new$pop65, log(eco_new$GDP_per_capita), xlab= "% of population over 65", ylab= "GDP_per_capita", main = "% of population over 65 vs. log of GDP per capita in 2018", pch= 16, col= "darkturquoise")
 abline(lm(log(eco_new$GDP_per_capita) ~ eco_new$pop65), col= "purple", lwd=3)
 legend("bottomright",title="Legend:", c("Regression line", "countries"), col= c("darkturquoise", "purple"), lty=c(1, NA), pch=c(NA, 16))
-#Surprisingly after examining the plot, it seems that in most countries as the percentage of people over 65 increases, so does the GDP per capita (in 2018). 
-
-
-
 ```
 
 **Surprisingly after examining the plot, it seems that in most countries as the percentage of people over 65 increases, so does the GDP per capita (in 2018).**
@@ -399,10 +396,9 @@ legend("topright",title="Legend:", c("Cases", "Deaths", "Pop65>24", "Deaths >15"
 text(flt_march$nor_cases~ flt_march$pop65, labels=ifelse(flt_march$pop65>24, flt_march$country, ""), pos=4, cex=0.8)
 text(flt_march$nor_deaths~ flt_march$pop65, labels=ifelse(flt_march$nor_deaths >15, flt_march$country, ""), pos=4, cex=0.8)
 
-
 ```
 
-
+**Paragragh on the plot **
  
 Use code blocks and markdown to clearly communicate your work.
 
