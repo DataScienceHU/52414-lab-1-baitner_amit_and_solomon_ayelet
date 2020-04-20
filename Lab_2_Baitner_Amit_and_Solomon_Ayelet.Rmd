@@ -65,7 +65,6 @@ d. Using the last day of March as a reference, create a single stacked bar-plot 
    
   
 **Solution:**  
-**c- Showing that the two methods are the same by getting true in the checking**
 
 
 ```{r}
@@ -95,7 +94,7 @@ recovered.agg <- recovered.agg[order(recovered.agg$Country.Region),]
 ```
 
 
-**By using a boolean value you can see that comparing the outputs from the two methodes (using the function aggregate and using the pipe method) gives the value TRUE beacouse they are the same.**
+**By using a boolean value you can see that comparing the outputs from the two methods (using the function aggregate and using the pipe method) gives the value TRUE beacouse they are the same.**
 ```{r}
 #c
 cases.agg1 <- select(conf_cases, Country.Region, Date, Value)
@@ -156,6 +155,8 @@ legend("topright",title="Legend:", c("Sick","Deaths", "Recovered"), fill = c("bi
 text(march_t, labels=)
 
 ```
+
+
 **Q1.d, we filteres tha data frames to the last day of march and selected the top ten countries with the most corona cases and stacked the data to a barplot.
 In the barplot you can see the top ten countries with corona cases stacked with the sick people, the numbers of deaths from corona and the recovered people for every country. You can see that Us is the country with the highest number of corona cases, and you can notice that china, which was the first one with corona, has the highest number of recovered cases.
 In our opinion, the problem of presenting the information in such a way is that we lose information about whether there is any trend in the data and it is also difficult to notice the difference between countries in the different cases (death, patients and recoverers). They all displayed in stacked and not 
@@ -227,12 +228,13 @@ new_deaths <- deaths.agg[order(-deaths.agg$Diff),][1:10,]
 
 top_cases <- select(new_cases, Country.Region, Date, Diff)
 top_deaths <- select(new_deaths, Country.Region, Date, Diff)
-
+```
+ ** The two tables presenting the top ten counties with new corona cases and corona's deaths.**
+```{r}
 as_tibble(top_cases) #Presenting the data (cases) as a table (tibble)
 as_tibble(top_deaths)
 ```
 
-**two tables presenting the top ten counties with new corona cases and corona's deaths.**
 
 ```{r}
 #c
@@ -243,7 +245,9 @@ plot(italy_cases$Date, italy_cases$Diff,type="o", xlab = "Date", ylab = "Value -
 points(italy_deaths$Date, italy_deaths$Diff,type="o", col= "blue", pch= 16)
 legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), pch = c(8, 16))
 ```
+
 **In this gragh we can see the dialy corona cases and deaths in italy from february to april. We used a pionts and lines in the gragh to show the trend line and the different cases and deaths. In the gragh you can see that the cases number and the deaths number are growing together and there is a tight connection between them in italy.**
+
 ```{r}
 #d
 plot(italy_cases$Date, log(italy_cases$Diff),type="o", xlab = "Date", ylab = "Value", main= "Italy daily deaths and new cases (in log)",pch = 8, col= "red", las=1)
@@ -307,7 +311,9 @@ legend("bottomright",title="Legend:", c("Regression line", "countries"), col= c(
 
 
 ```
+
 **Surprisingly after examining the plot, it seems that in most countries as the percentage of people over 65 increases, so does the GDP per capita (in 2018).**
+
 YOUR SOLUTION HERE.
 Use code blocks and markdown to clearly communicate your work.
 
