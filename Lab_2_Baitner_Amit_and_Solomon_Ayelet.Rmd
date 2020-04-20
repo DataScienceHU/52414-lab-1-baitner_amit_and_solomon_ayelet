@@ -232,7 +232,7 @@ as_tibble(top_cases) #Presenting the data (cases) as a table (tibble)
 as_tibble(top_deaths)
 ```
 
-**two tables presenting the top ten counties with new corona cases and deaths .**
+**two tables presenting the top ten counties with new corona cases and corona's deaths.**
 
 ```{r}
 #c
@@ -242,13 +242,16 @@ italy_deaths <- deaths.agg[which(deaths.agg$Country.Region== "Italy"),c(2,4)]
 plot(italy_cases$Date, italy_cases$Diff,type="o", xlab = "Date", ylab = "Value", main= "Italy- daily corona deaths and new cases by date ",pch = 8, col= "red", las=1, ylim=c(0, 7000))
 points(italy_deaths$Date, italy_deaths$Diff,type="o", col= "blue", pch= 16)
 legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), pch = c(8, 16))
-
+```
+**In this gragh we can see the dialy corona cases and deaths in italy from february to april. We used a pionts and lines in the gragh to show the trend line and the different cases and deaths. In the gragh you can see that the cases number and the deaths number are growing together and there is a tight connection between them in italy.**
+```{r}
 #d
 plot(italy_cases$Date, log(italy_cases$Diff),type="o", xlab = "Date", ylab = "Value", main= "Italy daily deaths and new cases (in log)",pch = 8, col= "red", las=1)
 points(italy_deaths$Date, log(italy_deaths$Diff),type="o", col= "blue", pch= 16, ylim= c(0, 12))
 legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), pch = c(8, 16))
 ```
-**Q2.d. We can learn from the graph that the deaths and new cases increase at a similair rate, parallel to eachother**
+**Q2.d.In this gragh you can see daily corona cases and  deaths in italy from february to april. We used logarithem algoritem on the cases and deaths. This gragh shoes We can learn from the graph that the deaths and new cases increase at a similair rate, parallel to eachother**
+
 <br/><br/>
 
 
@@ -304,7 +307,7 @@ legend("bottomright",title="Legend:", c("Regression line", "countries"), col= c(
 
 
 ```
-  **Surprisingly after examining the plot, it seems that in most countries as the percentage of people over 65 increases, so does the GDP per capita (in 2018).**
+**Surprisingly after examining the plot, it seems that in most countries as the percentage of people over 65 increases, so does the GDP per capita (in 2018).**
 YOUR SOLUTION HERE.
 Use code blocks and markdown to clearly communicate your work.
 
