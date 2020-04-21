@@ -393,12 +393,12 @@ flt_march <- cor_eco_march[which(cor_eco_march$pop65 >= 15),]
 plot(flt_march$pop65, flt_march$nor_cases, xlab = "% population over age 65", ylab = "Corona cases and deaths", main= "Corona cases and deaths vs % population over age 65", pch = c(8), col=ifelse(flt_march$pop65 >24,'red','blue'), las=1, ylim=c(0,250), xlim=c(15, 30))
 points(flt_march$pop65, flt_march$nor_deaths, col= ifelse(flt_march$pop65 >24 | flt_march$nor_deaths>15,'red','blue'), pch= 16)
 legend("topright",title="Legend:", c("Cases", "Deaths", "Pop65>24", "Deaths >15"), col= c("blue", "blue", "red", "red"), pch = c(8, 16, 8, 16))
-text(flt_march$nor_cases~ flt_march$pop65, labels=ifelse(flt_march$pop65>24, flt_march$country, ""), pos=4, cex=0.8)
+text(flt_march$nor_cases ~ flt_march$pop65, labels=ifelse(flt_march$pop65>24, flt_march$country, ""), pos=4, cex=0.8)
 text(flt_march$nor_deaths~ flt_march$pop65, labels=ifelse(flt_march$nor_deaths >15, flt_march$country, ""), pos=4, cex=0.8)
 
 ```
 
-**Paragragh on the plot **
+**Paragragh on the plot 
  
 Use code blocks and markdown to clearly communicate your work.
 
