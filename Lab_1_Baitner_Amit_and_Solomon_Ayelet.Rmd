@@ -466,6 +466,7 @@ Does the deaths rate is different? Does corona is so bad like cancer in the deat
 ***During this difficult period the two have us have been following the Israeli news. We noticed that most if not all of the people leading this crisis in the country are men. In addition we saw many articals saying the countries that doing best corona responses are countries with women as leaders. As this raised some questions relating woman leadership We decided to research and compare the spreading of COVID19 in developed countries (included in the OECD) led by woman as oppose to countries led by men.  To answer our research question we create a data set including only countries led by woman . In order to get results as accurate as possible and filter out the effect of other parameters that might distort our results, we create another data set including countries led by men with GDP per capita and population size similair to those of the first data set. 10 out of 36 countries in the OECD are currently led by woman (aproximatly 0.28 percent).***
 
 ```{r}
+"!"[fsfh](forbes_women_leaders.JPG)
 
 #OECD countries included in the list found on official OECD website
 oecd_countries <- c("Australia", "Austria", "Belgium", "Canada", "Chile", "Czechia", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Israel", "Italy", "Japan", "Korea, South", "Latvia", "Lithuania", "Luxembourg", "Mexico", "Netherlands", "New Zealand", "Norway", "Poland", "Portugal", "Slovenia", "Slovakia", "Spain", "Sweden", "Switzerland", "Turkey", "United Kingdom", "US")
@@ -551,25 +552,8 @@ lines(italy$Date, italy$Diff.cases,type="l", lwd= 1, col= "green", pch= 16, ylim
 lines(belgium$Date, belgium$Diff.cases,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
 lines(denmark$Date, denmark$Diff.cases,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
 lines(norway$Date, norway$Diff.cases,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(iceland$Date, iceland$Diff.cases,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(greece$Date, greece$Diff.cases,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(holland$Date, holland$Diff.cases,type="l", lwd= 1, col= "green", pch= 16, ylim= c(0, 12))
-lines(estonia$Date, estonia$Diff.cases,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(switz$Date, switz$Diff.cases,type="l", lwd= 1, col= "green", pch= 16, ylim= c(0, 12))
 
-plot(Spain$Date, Spain$Diff.deaths,type="l", lwd= 1, xlab = "Date", ylab = "Value", main= "OECD deaths march 2020- men vs women",pch = 8, col= "green", las=1)
-lines(germany$Date, germany$Diff.deaths,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-legend("topleft",title="Legend:", c("led by women", "led by man"), col= c("red", "green"), lty = c(1, 1))
-lines(UK$Date, UK$Diff.deaths,type="l", lwd= 1, col= "green", pch= 16, ylim= c(0, 12))
-lines(italy$Date, italy$Diff.deaths,type="l", lwd= 1, col= "green", pch= 16, ylim= c(0, 12))
-lines(belgium$Date, belgium$Diff.deaths,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(denmark$Date, denmark$Diff.deaths,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(norway$Date, norway$Diff.deaths,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(iceland$Date, iceland$Diff.deaths,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(greece$Date, greece$Diff.deaths,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(holland$Date, holland$Diff.deaths,type="l", lwd= 1, col= "green", pch= 16, ylim= c(0, 12))
-lines(estonia$Date, estonia$Diff.deaths,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
-lines(switz$Date, switz$Diff.deaths,type="l", lwd= 1, col= "green", pch= 16, ylim= c(0, 12))
+
 
 ```
 
