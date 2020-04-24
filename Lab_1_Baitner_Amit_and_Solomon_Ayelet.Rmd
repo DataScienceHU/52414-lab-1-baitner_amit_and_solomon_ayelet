@@ -473,7 +473,7 @@ oecd_countries <- c("Australia", "Austria", "Belgium", "Canada", "Chile", "Czech
 #All countries in the world currently led by woman
 wom_countries <- c("Germany", "Bangladesh", "Norway", "Namibia", "Nepal", "Myanmar", "Taiwan", "Estonia", "Serbia", "Singapore", "New Zealand", "Iceland", "Trinidad and Tobago", "Barbados", "Ethiopia", "Georgia", "Slovakia", "Denmark", "Belgium", "Bolivia", "Finland", "Greece")
 
-oecd_cor_eco <- cor_eco[which(cor_eco$country %in% oecd_countries), c("country", "Date", "Diff.deaths", "Diff.cases", "Cases", "Deaths", "nor_cases", "nor_deaths", "nor_recovered")]
+oecd_cor_eco <- cor_eco[which(cor_eco$country %in% oecd_countries), c("country", "Date", "Diff.deaths", "Diff.cases", "Cases", "Deaths", "nor_cases", "nor_deaths", "nor_recovered", "pop_total_columns")]
 
 oecd_w_cor_eco <- oecd_cor_eco[which(oecd_cor_eco$country %in% wom_countries),]
 `%notin%` <- Negate(`%in%`)
@@ -487,14 +487,16 @@ oecd_march <- oecd_march[order(-oecd_march$nor_cases),]
 **סיננו לסוף מרץ כתאריך שמייצג את שיא המגפה והוא מעט לפני תחילת ההקלות כך שייתן מספרים בשיאם**
 
 ```{r}
+par(mfrow=c(2,1))
 #gragh for the oecd countries for normalized corona cases.
 barplot(oecd_march$nor_cases, names.arg = oecd_march$country, main= "Normalized corona cases March OECD countries", cex.names = 0.5, col = ifelse(oecd_march$country %in% oecd_w_cor_eco$country,"deeppink", "cadetblue1"), xlab="Countries", ylab = "Corona normalized cases", las=2, ylim=c(0,500))
-legend("topright",title="Legend:", c("Led by men", "Led by Women"), fill = c("cadetblue1","deeppink"))
+legend("topright", c("Led by men", "Led by Women"), fill = c("cadetblue1","deeppink"))
 
 oecd_march <- oecd_march[order(-oecd_march$nor_deaths),]
 
 barplot(oecd_march$nor_deaths, names.arg = oecd_march$country, main= "Normalized corona deaths March OECD countries", cex.names = 0.5, col = ifelse(oecd_march$country %in% oecd_w_cor_eco$country,"deeppink", "cadetblue1"), xlab="Countries", ylab = "Corona normalized deaths", las=2, ylim=c(0, 25))
-legend("topright",title= "Legend:", c("Led by men", "Led by Women"), fill = c("cadetblue1","deeppink"))
+legend("topright", c("Led by men", "Led by Women"), fill = c("cadetblue1","deeppink"))
+
 
 
 ```
@@ -502,25 +504,30 @@ legend("topright",title= "Legend:", c("Led by men", "Led by Women"), fill = c("c
 
 
 ```{r}
-Australia <- oecd_cor_eco[which(oecd_cor_eco$country == "Australia"),]
-New_Zealend <- oecd_cor_eco[which(oecd_cor_eco$country == "New Zealand"),]
-
-plot(Australia$Date, Australia$Diff.cases,type="l", lwd= 2, xlab = "Date", ylab = "Value", main= "Italy daily deaths and new cases (in log)",pch = 8, col= "red", las=1)
-lines(New_Zealend$Date, New_Zealend$Diff.cases,type="l", lwd= 2, col= "blue", pch= 16, ylim= c(0, 12))
-legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), lty = c(1, 1))
-
-Ireland <- oecd_cor_eco[which(oecd_cor_eco$country == "Ireland"),]
-finland <- oecd_cor_eco[which(oecd_cor_eco$country == "Finland"),]
-
-plot(Ireland$Date, Ireland$Diff.cases,type="l", lwd= 2, xlab = "Date", ylab = "Value", main= "Italy daily deaths and new cases (in log)",pch = 8, col= "red", las=1)
-lines(finland$Date, finland$Diff.cases,type="l", lwd= 2, col= "blue", pch= 16, ylim= c(0, 12))
-legend("topleft",title="Legend:", c("germany", "turkey"), col= c("red", "blue"), lty = c(1, 1))
+#We normalized the columns: Diff.cases, Diff.deaths
+oecd_cor_eco$Diff.nor_cases <- (oecd_cor_eco$Diff.cases) / ((oecd_cor_eco$pop_total_columns) / 100000)
+oecd_cor_eco$Diff.nor_deaths <- (oecd_cor_eco$Diff.deaths) / ((oecd_cor_eco$pop_total_columns) / 100000)
 
 
-plot(Ireland$Date, Ireland$nor_deaths,type="l", lwd= 2, xlab = "Date", ylab = "Value", main= "Italy daily deaths and new cases (in log)",pch = 8, col= "red", las=1)
-lines(finland$Date, finland$nor_deaths,type="l", lwd= 2, col= "blue", pch= 16, ylim= c(0, 12))
-legend("topleft",title="Legend:", c("germany", "turkey"), col= c("red", "blue"), lty = c(1, 1))
+for (country in oecd_countries){
+    country <- oecd_cor_eco[which(oecd_cor_eco$country == country),]
+    
+}
 
+plot(1, type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
+legend("topleft",title="Legend:", c("led by women", "led by man"), col= c("red", "green"), lty = c(1, 1))
+for (country in oecd_countries){
+    country <- oecd_cor_eco[which(oecd_cor_eco$country == country),]
+    lines(country$Date, country$Diff.nor_cases, type="l", lwd=1, col= "green", pch= 16, ylim= c(0, 12))
+}
+
+oecd_cor_eco_mat <- oecd_cor_eco[,c("country","Date", "Diff.nor_cases")]
+mat <- as.matrix(oecd_cor_eco_mat[which(oecd_cor_eco_mat$country == "Spain"),])
+mat_2 <- (oecd_cor_eco_mat[which(oecd_cor_eco_mat$country == "Germany"),])
+matplot(mat, type="l", col= "red")
+lines(mat_2, type="l", col= "red")
+
+#ידני
 switz <- oecd_cor_eco[which(oecd_cor_eco$country == "Switzerland"),]
 germany <- oecd_cor_eco[which(oecd_cor_eco$country == "Germany"),]
 holland <- oecd_cor_eco[which(oecd_cor_eco$country == "Netherlands"),]
@@ -534,6 +541,7 @@ iceland <- oecd_cor_eco[which(oecd_cor_eco$country == "Iceland"),]
 greece <- oecd_cor_eco[which(oecd_cor_eco$country == "Greece"),]
 estonia <- oecd_cor_eco[which(oecd_cor_eco$country == "Estonia"),]
 
+#ידני
 
 plot(Spain$Date, Spain$Diff.cases,type="l", lwd= 1, xlab = "Date", ylab = "Value", main= "OECD corona cases march 2020- men vs women",pch = 8, col= "green", las=1)
 lines(germany$Date, germany$Diff.cases,type="l", lwd= 1, col= "red", pch= 16, ylim= c(0, 12))
@@ -565,6 +573,23 @@ lines(switz$Date, switz$Diff.deaths,type="l", lwd= 1, col= "green", pch= 16, yli
 
 ```
 
+```{r}
+corona_tests <- read.csv("full-list-cumulative-total-tests-per-thousand.csv", header=TRUE, comment.char = "#")
+corona_tests[2] <- NULL
+corona_tests[2] <- NULL
+names(corona_tests)[1] <- "country"
+names(corona_tests)[2] <- "Total_tests_per_1000"
+#corona$Date <- as.Date(corona_tests$Date)
+#class(corona_tests$Date)
+
+corona_tests <- corona_tests[which(corona_tests$country %in% oecd_countries),]
+unique(corona_tests$country)
+
+cor_test_agg <- aggregate(Total_tests_per_1000 ~ country ,data= corona_tests, FUN=sum)
+cor_test_agg <- cor_test_agg[order(-cor_test_agg$Total_tests_per_1000),]
+
+barplot(cor_test_agg$Total_tests_per_1000, names.arg = cor_test_agg$country, main= "Total corona tests per 1000 in the OECD countries (23.04.20)", cex.names = 0.5, col = ifelse(cor_test_agg$country %in% oecd_w_cor_eco$country,"deeppink", "cadetblue1"), xlab="Countries", ylab = "Corona normalized tests", las=2, ylim=c(0, 3000))
+legend("topright",title= "Legend:", c("Led by men", "Led by Women"), fill = c("cadetblue1","deeppink"))
 
 
 ```
