@@ -526,6 +526,8 @@ Does the deaths rate is different? Does corona is so bad like cancer in the deat
   
 **Solution:**   
 
+![forbes](https://github.com/DataScienceHU/52414-lab-1-baitner_amit_and_solomon_ayelet/blob/master/%E2%80%8F%E2%80%8Fforbes_women_leaders.JPG?raw=true)
+
 **During this difficult period we both have been following the Israeli news. We noticed that most if not all of the people leading this crisis in the country are men. In addition we saw many articals saying the countries that doing best corona responses are countries with women as leaders. As this raised some questions relating woman leadership We decided to research and compare the spreading of COVID19 in developed countries (included in the OECD) led by woman as oppose to countries led by men.  To answer our research question we create a data set including only countries led by woman . In order to get results as accurate as possible and filter out the effect of other parameters that might distort our results, we focus the research question in order to obtain framed results, we chose to delve deeper into OECD countries as many countries are led by women. 10 out of 36 countries in the OECD are currently led by woman (aproximatly 0.28 percent).**
 
 
