@@ -621,7 +621,8 @@ legend("topleft", c("led by women", "led by man"), col= c("deeppink", "blue"), l
 ```
 
 ```{r}
-corona_tests <- read.csv("full-list-cumulative-total-tests-per-thousand.csv", header=TRUE, comment.char = "#")
+corona_tests <- read.csv(url("https://raw.githubusercontent.com/DataScienceHU/52414-lab-1-baitner_amit_and_solomon_ayelet/master/full-list-cumulative-total-tests-per-thousand.csv"),header=TRUE)
+
 corona_tests[2] <- NULL
 corona_tests[2] <- NULL
 names(corona_tests)[1] <- "country"
