@@ -138,6 +138,7 @@ all(recovered.agg==recov.agg1)
 ```
 
 **d.**
+
 **We filteres the data by the last day of march and then we ordered the data from the largest value down and we chose the top ten countries for the barplot.**
 
 ```{r}
@@ -183,11 +184,9 @@ text(march_t, labels=)
 
 **Q1.d.**
 
-**we filteres tha data frames to the last day of march and selected the top ten countries with the most corona cases and stacked the data to a barplot.**
+**In the barplot you can see the top ten countries with corona cases stacked with the sick people, the numbers of deaths from corona and the recovered people for every country. You can see that Us is the country with the highest number of corona cases, and you can notice that china, which was the first one with corona, has the highest number of recovered cases.The number of recoverers rises as the country was among the first to be affected and is low for those still in the middle of the epidemic.** 
 
-**In the barplot you can see the top ten countries with corona cases stacked with the sick people, the numbers of deaths from corona and the recovered people for every country. You can see that Us is the country with the highest number of corona cases, and you can notice that china, which was the first one with corona, has the highest number of recovered cases.**
-
-**In our opinion, the problem of presenting the information in such a way is that we lose information about whether there is any trend in the data and it is also difficult to notice the difference between countries in the different cases (death, patients and recoverers). They all displayed in stacked and not separately**
+**In our opinion, the problem of presenting the information in such a way is that we lose information about whether there is any trend in the data and it is also difficult to notice the difference between countries in the different cases (death, patients and recoverers). They all displayed in stacked and not separately. Choosing the end of March date also gives misleading information. Some countries have already undergone the epidemic (China) while some are under way (Italy). We note that with this method the numbers are not normalized to the country's population and therefore the comparison is biased****
 
 <br/><br/>  
 
@@ -208,7 +207,7 @@ d. Plot the same graph as in (c), but this time plot the number of new cases on 
 **Q2.b.**
 **we created new columns for death and corona cases that displays the day-to-day changes in values so that the rate of change can also be checked. We used a loop that subtracts two consecutive days and creates a column of changes called Diff.**
 
-**We found the unique values of the date and checked the differences for each country every two days and with a loop we created a new vector that shows the changes**
+**method:We found the unique values of the date and checked the differences for each country every two days and with a loop we created a new vector that shows the changes.**
 ```{r}
 #a
 #Finding the unique values on cases
@@ -261,7 +260,7 @@ top_cases <- select(new_cases, Country.Region, Date, Diff)
 top_deaths <- select(new_deaths, Country.Region, Date, Diff)
 ```
 
-**The two tables presenting the top ten counties with new corona cases and corona's deaths. We ordered the cases by the coloumn Diff.cases from the largest to smalles and the same for deaths and then we chose the top ten for each data**
+**The two tables presenting the top ten counties with new corona cases and corona's deaths. We ordered the cases by the coloumn Diff.cases from the largest to smalles and the same for deaths and then we chose the top ten for each data.**
 
 ```{r}
 as_tibble(top_cases) #Presenting the data (cases) as a table (tibble)
@@ -281,7 +280,7 @@ lines(italy_deaths$Date, italy_deaths$Diff,type="l", lwd= 2, col= "blue")
 legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), lty = c(1, 1))
 ```
 
-**In this gragh you can see the dialy corona cases and deaths in italy from february to april. We used lines in the gragh to show the trend lines of corona cases and deaths. In the gragh you can see that the cases number and the deaths number are growing together and there is a tight connection between them in italy.**
+**In this gragh you can see the daily corona cases and deaths in italy from february to april. We used lines in the gragh to show the trend lines of corona cases and deaths. In the gragh you can see that the cases number and the deaths number are growing together and there is a tight connection between them in italy.**
 
 ```{r}
 #d
@@ -291,7 +290,7 @@ legend("topleft",title="Legend:", c("Cases", "Deaths"), col= c("red", "blue"), l
 ```
 
 **Q2.d.**
-**In this gragh you can see daily corona cases and  deaths in italy from february to april. We used logarithem algoritem on the cases and deaths. This gragh shoes We can learn from the graph that the deaths and new cases increase at a similair rate, parallel to eachother**
+**In this gragh you can see daily corona cases and  deaths in italy from february to april. We used logarithem algoritem on the cases and deaths. We can learn from the graph that the deaths and new cases increase at a similair rate, parallel to eachother**
 
 <br/><br/>
 
@@ -310,8 +309,10 @@ Next (considering all countries), plot the % of population over 65 vs. log of GD
 
   
 **Solution:** 
+
 **Q3.**
-**we loaded the eco data and changed the columns names formore representative names.You can see the new columns names in the printing. **
+
+**we loaded the eco data and changed the columns names to more representative names.You can see the new columns names in the printing. **
 ```{r}
 #a
 eco_data <- read.csv(url("https://raw.githubusercontent.com/DataScienceHU/DataAnalysisR_2020/master/data/economic_data.csv"), header = T)
@@ -322,9 +323,8 @@ print(colnames(eco_data))
 ```
 
 **b.**
-**we took the information we loaded from the Internet and changed it. We changed it from a long to wide format, creating new columns that include country and the unique values that were in the column feature and the columns value came from column Y2018. We used the dcast function we learn about in class. We also eraseג the first line because it was empty and the same for the first column.**
-**In the process we received error notes that we gave the function dcast data frame instead of table and we are aware of it and still prefer this format. Indeed, we made sure we didn't lose any information.**
-**You can see that the dim of the data is 266 on 11 as you instructed. And you can see the head of the data frame.**
+**we took the information we loaded from the Internet and changed it from a long to wide format, creating new columns that include country and the unique values that were in the column feature and the columns value that came from column Y2018. We used the dcast function we learn about in class. We also erase the first line in the data because it was empty and the same for the first column.**
+**In the process we received error notes that we gave the function dcast data frame instead of data table and we are aware of it and still prefer this format. Indeed, we made sure we didn't lose any information.**
 
  
 ```{r}
@@ -334,6 +334,11 @@ eco$Y2018V <- as.numeric(as.character(eco$Y2018V))
 eco <- dcast(eco, country~feature, value.var="Y2018V", fun.aggregate= sum, na.rm= TRUE)
 eco$Var.2 <- NULL
 eco <- eco[-c(1),]
+```
+
+**You can see that the dim of the data is 266 on 11 as you instructed. And you can see the head of the data frame.**
+
+```{r}
 dim(eco)
 head(eco)
 ```
@@ -360,7 +365,13 @@ top_eco <- eco_new[1:5,c("country", "GDP_per_capita")]
 top_eco <- as.data.table(top_eco)
 print(top_eco)
 
-eco_new <- eco_new[1:239,c("country", "pop65", "GDP_per_capita")]
+data_len <- length(eco_new$country)*0.9
+eco_new <- eco_new[1:data_len,c("country", "pop65", "GDP_per_capita")]
+```
+
+**We arranged the data in descending order and by finding the data length and multiplying it by 0.9. We used this metric to cut the data, thus erasing ten percent of the countries with the least value.**
+
+```{r}
 plot(eco_new$pop65, log(eco_new$GDP_per_capita), xlab= "% of population over 65", ylab= "GDP_per_capita", main = "% of population over 65 vs. log of GDP per capita in 2018", pch= 16, col= "darkturquoise")
 abline(lm(log(eco_new$GDP_per_capita) ~ eco_new$pop65), col= "purple", lwd=3)
 legend("bottomright",title="Legend:", c("Regression line", "countries"), col= c("darkturquoise", "purple"), lty=c(1, NA), pch=c(NA, 16))
@@ -370,16 +381,12 @@ legend("bottomright",title="Legend:", c("Regression line", "countries"), col= c(
 
 **The graph shows GDP per capita against the percentage of the population over 65 in the different countries. We also added a regression line to show the trend. It can be seen that as the percentage of older people increases, so does GDP per capita, but that stops in the region of 20 and a few percent of adults. You can see that the data is relatively scattered against the trend line and this is not a uniform trend**
 
-**איך הורדנו 10 אחוז
-
 **Surprisingly after examining the plot, it seems that in most countries as the percentage of people over 65 increases, so does the GDP per capita (in 2018).We noticed that the information is scattered around the regression line so there is no clear trend between all the countries**
-
 
 YOUR SOLUTION HERE.
 Use code blocks and markdown to clearly communicate your work.
 
 <br/><br/>  
-
 
 ### Q4
 ### Joining the Datasets   
@@ -395,7 +402,9 @@ d. Using the last day of March as a reference, create a scatter-plot of normaliz
 In addition, colorcorona <- the outliers( pop65>24, norm100K_deaths>15) in that plot in red and add to the plot their country names (7pts)
   
 **Solution:**
+
 **Q4.**
+
 **a.**
 **We changed the named of the columns in the aggregated data from Q1 and full join the three data's: cases, deaths and recovered. Useing a full join make sure we don't lose any information. We first full joined the deaths data and the recovered data and then we full joined the new data and the cases data and at the end we got the corona data that contains everything.**
 ```{r}
@@ -517,13 +526,16 @@ Does the deaths rate is different? Does corona is so bad like cancer in the deat
   
 **Solution:**   
 
-**During this difficult period the two have us have been following the Israeli news. We noticed that most if not all of the people leading this crisis in the country are men. In addition we saw many articals saying the countries that doing best corona responses are countries with women as leaders. As this raised some questions relating woman leadership We decided to research and compare the spreading of COVID19 in developed countries (included in the OECD) led by woman as oppose to countries led by men.  To answer our research question we create a data set including only countries led by woman . In order to get results as accurate as possible and filter out the effect of other parameters that might distort our results, we create another data set including countries led by men with GDP per capita and population size similair to those of the first data set. 10 out of 36 countries in the OECD are currently led by woman (aproximatly 0.28 percent).**
+**During this difficult period we both have been following the Israeli news. We noticed that most if not all of the people leading this crisis in the country are men. In addition we saw many articals saying the countries that doing best corona responses are countries with women as leaders. As this raised some questions relating woman leadership We decided to research and compare the spreading of COVID19 in developed countries (included in the OECD) led by woman as oppose to countries led by men.  To answer our research question we create a data set including only countries led by woman . In order to get results as accurate as possible and filter out the effect of other parameters that might distort our results, we focus the research question in order to obtain framed results, we chose to delve deeper into OECD countries as many countries are led by women. 10 out of 36 countries in the OECD are currently led by woman (aproximatly 0.28 percent).**
 
-**Recently, we have noticed that there has been a lot of news on the news sites and on TV that what is common to the countries that deal well with the Corona epidemic are women-led countries.As women the subject mattered to us and we wanted to know whether this statement is also reflected through data analysis on corona data and whether we can confirm it or not.To focus the research question in order to obtain framed results, we chose to delve deeper into OECD countries as many countries are led by women.**
 
 **Research Question: Are OECD countries led by women countries really better at coping with the Corona epidemic?**
 
-**In order to examine the reaserch question, from the Corona database we filtered out the countries that are in the OECD and also separated from them the countries led by women.**
+**Our assumptions:**
+**- Better transportation of a country will result in a better deal with the Corona and this will be reflected in a low number of infections, a few deaths and a lot of exactly the citizens of the country.**
+**- If women lead the epidemic better, we will see the countries leading women in low corona and death rates and high rates of testing, compared to men led by men.**
+
+**In order to examine the reaserch question, from the Corona database we filtered out the countries that are in the OECD and also separated from them the countries led by women, and we added data on tests numbers in the OECD countries.**
 
 
 ```{r}
@@ -545,7 +557,7 @@ oecd_march <- oecd_march[order(-oecd_march$nor_cases),]
 
 **We then filtered the information for the last day of March and presented all OECD countries with normalized corona and normalized deaths. In the graph, we colored pink the countries led by women and blue those led by men and arranged in ascending orde.**
 
-**It can be seen that contrary to the media's presentation, both in the Corona cases and in the deaths the women led countries are not in the lowest and not the highest places but relatively in the middle and therefore cannot be said to cope better with the plague**
+**It can be seen that contrary to the media's presentation, both in the Corona cases and in the deaths the women led countries are not in the lowest and not the highest places but relatively in the middle and therefore cannot be said to cope better with the plague.**
 
 ```{r}
 #gragh for the oecd countries for normalized corona cases.
@@ -560,7 +572,9 @@ legend("topright", c("Led by men", "Led by Women"), fill = c("cadetblue1","deepp
 
 
 ```
-**explnation**
+
+
+**Both graphs (of normal coronary cases and of normal coronary deaths) show that women-led (pink-colored) countries are not in the lowest and highest places, so for men, the number of coroners and deaths is neither better nor worse. To conclude from this analysis that women do not necessarily lead countries better at the time of the epidemic, we note that the normalized numbers can be compared across countries despite a different population.**
 
 
 ```{r}
