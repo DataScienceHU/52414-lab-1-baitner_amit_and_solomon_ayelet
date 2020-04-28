@@ -557,17 +557,17 @@ oecd_m_cor_eco <- oecd_cor_eco[which(oecd_cor_eco$country %notin% wom_countries)
 #Creating data including only the 31st of March.
 oecd_march <- oecd_cor_eco[which(oecd_cor_eco$Date=="2020-03-31"),]
 oecd_march <- oecd_march[order(-oecd_march$nor_cases),] 
+oecd_march$country[oecd_march$country == "United Kingdom"] <- "UK"
 
 #gragh for the oecd countries for normalized corona cases.
 barplot(oecd_march$nor_cases, names.arg = oecd_march$country, main= "Normalized corona cases March OECD countries", cex.names = 0.5, col = ifelse(oecd_march$country %in% wom_countries,"deeppink", "cadetblue1"), xlab="Countries", ylab = "Corona normalized cases", las=2, ylim=c(0,500))
 legend("topright", c("Led by men", "Led by Women"), fill = c("cadetblue1","deeppink"))
 
 oecd_march <- oecd_march[order(-oecd_march$nor_deaths),]
+oecd_march$country[oecd_march$country == "Korea, South"] <- "S.Korea"
 
 barplot(oecd_march$nor_deaths, names.arg = oecd_march$country, main= "Normalized corona deaths March OECD countries", cex.names = 0.5, col = ifelse(oecd_march$country %in% oecd_w_cor_eco$country,"deeppink", "cadetblue1"), xlab="Countries", ylab = "Corona normalized deaths", las=2, ylim=c(0, 25))
 legend("topright", c("Led by men", "Led by Women"), fill = c("cadetblue1","deeppink"))
-
-
 
 ```
 
