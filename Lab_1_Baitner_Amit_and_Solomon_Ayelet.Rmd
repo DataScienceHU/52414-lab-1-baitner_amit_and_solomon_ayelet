@@ -100,11 +100,11 @@ print(class(conf_recov$Date))
 #b
 #Aggregating the data and creating new data frames
 cases.agg <- aggregate(Value ~ Country.Region + Date, data= conf_cases, FUN=sum)
-cases.agg <- cases.agg[order(cases.agg$Country.Region),]
+cases.agg <- cases.agg[order(cases.agg$Country.Region, cases.agg$Date),]
 print(colnames(cases.agg))
 
 deaths.agg <- aggregate(Value ~ Country.Region + Date, data= conf_deaths, FUN=sum)
-deaths.agg <- deaths.agg[order(deaths.agg$Country.Region),]
+deaths.agg <- deaths.agg[order(deaths.agg$Country.Region, deaths.agg$Date),]
 print(colnames(deaths.agg))
 
 recovered.agg <- aggregate(Value ~ Country.Region + Date, data= conf_recov, FUN=sum)
